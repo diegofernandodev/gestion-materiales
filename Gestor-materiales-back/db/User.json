@@ -1,0 +1,30 @@
+[
+  {
+    "_id": "8a9a487e-89de-419d-93fa-6baebf2ea3d8",
+    "nombre": "fernando",
+    "correo": "ejemplo@ejemplo",
+    "password": "$2b$10$EYnVAZp/x/efS7lAocUEROqXOau1bdLsZJvYWbYFl2V5rX7/fRi9m",
+    "rol_id": "admin"
+  },
+  {
+    "_id": "df0d8c02-9e72-495d-ad1f-afae73943c5b",
+    "nombre": "John Doe",
+    "correo": "john.doess@example.com",
+    "password": "$2b$10$aaFZyvBNMhW56wbA0nbh4epn84RSSNeavNzDqSuk1PK/uOmiqVM02",
+    "rol_id": "12345"
+  },
+  {
+    "_id": "35b357a5-a958-40e1-80fa-8f5269ba2d26",
+    "nombre": "John Doe",
+    "correo": "john.does@example.com",
+    "password": "$2b$10$KoIS1NsANNKQyt6BOLnQSuKFJS8Kknok5juugvdq2sF3tFHmTcq7u",
+    "rol_id": "12345"
+  },
+  {
+    "_id": "2f058d42-48ea-4116-9e66-579da1bcc582",
+    "nombre": "John Doe",
+    "correo": "john.doe@example.com",
+    "password": "securepassword",
+    "rol_id": "12345"
+  }
+]
