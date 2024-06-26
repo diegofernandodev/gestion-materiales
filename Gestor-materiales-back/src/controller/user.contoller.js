@@ -5,9 +5,9 @@ import { tokenSign, verifyToken } from '../helpers/generarToken.js';
 const usersController = {};
 
 usersController.createUser = async (req, res) => {
-    const { nombre, correo, password} = req.body;
+    const { nombre, correo, password, rol_id} = req.body;
     try {
-        const id = await userRepository.create({ nombre, correo, password});
+        const id = await userRepository.create({ nombre, correo, password, rol_id});
         res.send({ id });
     } catch (error) {
         res.status(400).send(error.message);
@@ -23,7 +23,7 @@ usersController.login = async (req, res) => {
             httpOnly: true,
             secure: process.env.NODE_ENV === "production",
             sameSite: "strict",
-            maxAge: 1000 * 60 * 60 // 1 hora
+            maxAge: 1000 * 60 * 60 
         });
         res.send("Login exitoso");
         console.log("Login exitoso")
@@ -31,6 +31,49 @@ usersController.login = async (req, res) => {
         res.status(401).send(error.message);
     }
 };
+
+usersController.obtenerUsers = async (req, res) => {
+    try {
+        const users = await userRepository.obtenerUsuarios();
+        res.send(users);
+    } catch (error) {
+        res.status(400).send(error.message);
+    }
+};
+
+usersController.obtenerUsersPorId = async (req, res) => {
+    const { id } = req.params;
+    try {
+        const user = await userRepository.usuarioId(id);
+        res.send(user);
+    } catch (error) {
+        res.status(400).send(error.message);
+    }
+};
+
+usersController.modificarUser = async (req, res) => {
+    const { id } = req.params;
+    const { nombre, correo, password, rol_id } = req.body;
+  
+    try {
+      const user = await userRepository.modificarUsuario(id, { nombre, correo, password, rol_id });
+      res.status(200).send(user);
+    } catch (error) {
+      res.status(400).send(error.message);
+    }
+  };
+  
+  usersController.eliminarUser = async (req, res) => {
+    const { id } = req.params; 
+  
+    try {
+      const result = await userRepository.eliminarUsuario(id); 
+      res.status(200).send(result); 
+    } catch (error) {
+      res.status(400).send({ error: error.message }); 
+    }
+  };
+  
 
 usersController.protected = async (req, res) => {
     console.log("token cookies ", req.cookies.access_token);

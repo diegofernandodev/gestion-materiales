@@ -1,6 +1,9 @@
 import express from 'express';
 import bodyParser from 'body-parser';
 import userRoutes from '../routes/users.routes.js';
+import materialRoutes from '../routes/materiales.routes.js';
+import entregasRoutes from "../routes/entregas.routes.js";
+import rolesRoutes from "../routes/roles.routes.js";
 import cookieParser from "cookie-parser";
 import cors from 'cors';
 import path from 'path';
@@ -28,6 +31,9 @@ app.set('view engine', 'ejs');
 
 // Importar rutas
 app.use(userRoutes);
+app.use(materialRoutes);
+app.use(entregasRoutes);
+app.use(rolesRoutes);
 
 // Ruta principal
 app.get('/', (req, res) => {

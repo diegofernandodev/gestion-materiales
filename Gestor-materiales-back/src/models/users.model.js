@@ -3,6 +3,10 @@ import sequelize from '../config/database.js';
 import Role from '../models/role.js';
 
 const User = sequelize.define('User', {
+  _id: {
+    type: DataTypes.STRING,
+    primaryKey: true
+  },
   nombre: {
     type: DataTypes.STRING,
     allowNull: false
@@ -17,10 +21,11 @@ const User = sequelize.define('User', {
     allowNull: false
   },
   rol_id: {
-    type: DataTypes.INTEGER,
+    type: DataTypes.STRING,
+    allowNull: false,
     references: {
       model: Role,
-      key: 'id'
+      key: '_id'
     }
   }
 });
