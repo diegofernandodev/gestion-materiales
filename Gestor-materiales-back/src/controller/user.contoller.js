@@ -25,8 +25,8 @@ usersController.login = async (req, res) => {
             sameSite: "strict",
             maxAge: 1000 * 60 * 60 
         });
-        res.send("Login exitoso");
-        console.log("Login exitoso")
+        res.send("Login exitoso: ");
+        console.log("Login exitoso:\n", token)
     } catch (error) {
         res.status(401).send(error.message);
     }

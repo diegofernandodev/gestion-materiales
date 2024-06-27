@@ -2,7 +2,9 @@ const checkRol = (rolesPermitidos) => {
     return (req, res, next) => {
       try {
        
-        if (!req.user || !req.user.rol || !rolesPermitidos.includes(req.user.rol)) {
+        const userRoleName = req.rol_nombre;
+
+        if (!req.user || !req.user.rol_id || !rolesPermitidos.includes(userRoleName)) {
           return res.status(403).json({ error: 'Acceso prohibido' });
         }
   

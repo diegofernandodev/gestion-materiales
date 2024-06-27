@@ -1,8 +1,13 @@
 import axios from 'axios';
 
-const instance = axios.create({
+const api = axios.create({
     baseURL: 'http://localhost:3000', 
     timeout: 10000, 
 });
 
-export default instance;
+export const obtenerEntregas = async () => {
+    const response = await api.get('/obtenerEntregasRol');
+    return response.data;
+  };
+
+export default api;

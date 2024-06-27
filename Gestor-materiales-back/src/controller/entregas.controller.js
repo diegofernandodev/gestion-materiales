@@ -52,4 +52,56 @@ entregasController.eliminarEntrega = async (req, res) => {
     }
 };
 
+// entregasController.obtenerEntregasParaAdministrador = async (req, res) => {
+//     try {
+//         const entregasDetalladas = await entregaRepository.obtenerEntregasParaAdministrador()
+//         res.status(200).json(entregasDetalladas);
+//       } catch (error) {
+//         res.status(500).json({ error: 'Error al obtener las entregas para el administrador' });
+//       }
+// }
+
+// entregasController.obtenerEntregasParaRepartidor = async (req, res) =>{
+//     const repartidorId = req.user._id; 
+//     try {
+//       const entregasPendientes = await entregaRepository.obtenerEntregasParaRepartidor(repartidorId)
+//       res.status(200).json(entregasPendientes);
+//     } catch (error) {
+//       res.status(500).json({ error: 'Error al obtener las entregas para el repartidor' });
+//     }
+// }
+
+// entregasController.obtenerEntregasParaEstudiante = async (req, res) => {
+//     const estudianteId = req.user._id; 
+//     try {
+//       const entregasRecibidas = await entregaRepository.obtenerEntregasEstudiante(estudianteId)
+//       res.status(200).json(entregasRecibidas);
+//     } catch (error) {
+//       res.status(500).json({ error: 'Error al obtener las entregas para el estudiante' });
+//     }
+//   }
+
+  entregasController.obtenerEntregasRol = async (req, res) => {
+    try {
+      const { rol_nombre, _id } = req.user;
+
+      let entregas;
+      if (rol_nombre === 'administrador') {
+        entregas = await EntregaService.obtenerEntregasParaAdministrador();
+      } else if (rol_nombre === 'repartidor') {
+        entregas = await EntregaService.obtenerEntregasParaRepartidor(_id);
+      } else if (rol_nombre === 'estudiante') {
+        entregas = await EntregaService.obtenerEntregasParaEstudiante(_id);
+      } else {
+        return res.status(403).json({ error: 'Rol no permitido' });
+      }
+
+      return res.status(200).json(entregas);
+    } catch (error) {
+      console.error(error);
+      return res.status(500).json({ error: 'Error al obtener entregas' });
+    }
+  }
+
+
 export default entregasController;

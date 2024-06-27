@@ -38,7 +38,7 @@ export class userRepository {
     Validation.password(password)
 
     const user = await User.findOne({ where: {correo} })
-    if (!user) throw new Error('El correo ya esta registrado por otro usuario')
+    if (!user) throw new Error('El correo no esta registrado')
 
     const isValid = await bcrypt.compare(password, user.password)
     if (!isValid) throw new Error('El password no es valido')

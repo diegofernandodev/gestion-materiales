@@ -109,22 +109,41 @@ export class entregaRepository {
 }
 
 
-  static async obtenerEntregasParaAdministrador() {
-    const entregasDetalladas = await Entrega.findAll({
-        include: [
-            {
-                model: Usuario,
-                as: 'usuario',
-                attributes: ['nombre'], 
-            },
-            {
-                model: Material,
-                as: 'material',
-                attributes: ['nombre', 'descripcion'], 
-            }
-        ]
-    });
-    return entregasDetalladas;
+//   static async obtenerEntregasParaAdministrador() {
+//     const entregasDetalladas = await Entrega.findAll({
+//         include: [
+//             {
+//                 model: Usuario,
+//                 as: 'usuario',
+//                 attributes: ['nombre'], 
+//             },
+//             {
+//                 model: Material,
+//                 as: 'material',
+//                 attributes: ['nombre', 'descripcion'], 
+//             }
+//         ]
+//     });
+//     return entregasDetalladas;
+// }
+
+static async obtenerEntregasEstudiante(estudianteId) {
+  const entregasRecibidas = await Entrega.findAll({
+    where: { usuario_id: estudianteId },
+    include: [
+      {
+        model: User,
+        as: 'usuario',
+        attributes: ['nombre']
+      },
+      {
+        model: Material,
+        as: 'material',
+        attributes: ['nombre', 'descripcion']
+      }
+    ]
+  });
+  return entregasRecibidas;
 }
 
   

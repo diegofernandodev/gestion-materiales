@@ -1,5 +1,5 @@
 import jwt from 'jsonwebtoken';
-
+import Role from '../models/role.js';
 
 const validarToken = async (req, res, next) => {
   try {
@@ -10,15 +10,23 @@ const validarToken = async (req, res, next) => {
     }
  
 
-    jwt.verify(token, process.env.JWT_SECRET, (err, decodedToken) => {
+    jwt.verify(token, process.env.JWT_SECRET, async (err, decodedToken) => {
       if (err) {
         return res.status(401).json({ error: 'Token no válido' });
       }
       req.user = decodedToken;
-      
+
+      req._id = decodedToken._id;
       req.nombre = decodedToken.nombre;
       req.correo = decodedToken.correo
       req.rol_id = decodedToken.rol_id;
+
+      const role = await Role.findByPk(req.rol_id);
+      if (role) {
+        req.rol_nombre = role.nombre;
+      } else {
+        return res.status(401).json({ error: 'Rol no válido' });
+      }
       next();
     });
   } catch (error) {
